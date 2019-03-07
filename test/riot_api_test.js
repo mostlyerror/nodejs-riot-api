@@ -132,4 +132,69 @@ describe ('RiotAPI:', () => {
     })
   })
 
+  describe('getMatchById', () => {
+    it('returns match data', async () => {
+      const res = await client.getMatchById('2985127546')
+      assert.equal(res.status, 200)
+// { gameId: 2985127546,
+//   platformId: 'NA1',
+//   gameCreation: 1550995221734,
+//   gameDuration: 2148,
+//   queueId: 420,
+//   mapId: 11,
+//   seasonId: 13,
+//   gameVersion: '9.4.264.1140',
+//   gameMode: 'CLASSIC',
+//   gameType: 'MATCHED_GAME',
+//   teams:
+//    [ { teamId: 100,
+//        win: 'Win',
+//        firstBlood: false,
+//        firstTower: true,
+//        firstInhibitor: true,
+//        firstBaron: true,
+//        firstDragon: true,
+//        firstRiftHerald: true,
+//        towerKills: 10,
+//        inhibitorKills: 2,
+//        baronKills: 1,
+//        dragonKills: 3,
+//        vilemawKills: 0,
+//        riftHeraldKills: 1,
+//        dominionVictoryScore: 0,
+//        bans: [Array] },
+    })
+  })
+
+  describe('getMatchesByAccountId', () => {
+    it('returns list of matches', async () => {
+      const res = await client.getMatchesByAccountId('q6tThrtdAUp5UI_0BtvAGvYAB7EBUVadkIkVQtj1yJnhv1o')
+      assert.equal(res.status, 200)
+      assert.isDefined(res.data)
+      assert.isDefined(res.data.matches)
+      assert.isDefined(res.data.totalGames)
+     
+    //   console.log(res.data.matches[0])
+    //   console.log(res.data.matches)
+
+//   { platformId: 'NA1',
+//     gameId: 2971734116,
+//     champion: 61,
+//     queue: 420,
+//     season: 13,
+//     timestamp: 1549478820484,
+//     role: 'SOLO',
+//     lane: 'MID' }
+    })
+
+    it('returns an error not found when AccountId not found', async () => {
+      const res = await client.getMatchesByAccountId('123132qwerqewrqwer')
+      assert.equal(res.status, 400)
+    })
+
+    it('returns an error forbidden when AccountId bad', async () => {
+      const res = await client.getMatchesByAccountId('')
+      assert.equal(res.status, 403)
+    })
+  })
 })
