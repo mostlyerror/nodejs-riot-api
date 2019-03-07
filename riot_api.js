@@ -21,15 +21,35 @@ class RiotAPI {
     }
   }
 
+  getLolStatus() {
+    return this.makeApiCall('getlolStatus')
+  }
+
+  getSummonerBySummonerId(id) {
+    return this.makeApiCall('getSummonerBySummonerId', id)
+  }
+
+  getSummonerByName(name) {
+    return this.makeApiCall('getSummonerByName', name)
+  }
+
+  getSummonerByAccountId(id) {
+    return this.makeApiCall('getSummonerByAccountId', id)
+  }
+
+  getSummonerByPuuid(puuid) {
+    return this.makeApiCall('getSummonerByPuuid', puuid)
+  }
+
   urlFor(api, resource) {
     const urlMap = {
       getlolStatus: 'https://na1.api.riotgames.com/lol/status/v3/shard-data',
+      getSummonerBySummonerId: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/${resource}`,
       getSummonerByName: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${resource}`,
-      getSummonerBySummonerId: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/${resource}`
+      getSummonerByAccountId: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-account/${resource}`
     }
 
-    if (!urlMap.hasOwnProperty(api)) throw new Error(`Unrecognized API: ${api}`)
-
+    if (!urlMap.hasOwnProperty(api)) { throw new Error(`Unrecognized API: ${api}`) }
     return urlMap[api]
   }
 
@@ -45,17 +65,6 @@ class RiotAPI {
       .catch(err => err.response)
   }
 
-  getSummonerBySummonerId(id) {
-    return this.makeApiCall('getSummonerBySummonerId', id)
-  }
-
-  getSummonerByName(name) {
-    return this.makeApiCall('getSummonerByName', name)
-  }
-
-  getLolStatus() {
-    return this.makeApiCall('getlolStatus')
-  }
 }
 
 module.exports = RiotAPI
