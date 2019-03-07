@@ -35,8 +35,14 @@ describe ('RiotAPI:', () => {
 
   describe('urlFor', () => {
     it('returns the full URL for the resource', async () => {
-      const url = client.urlFor('lolStatus')
+      const url = client.urlFor('getlolStatus')
       assert.isString(url)
+    })
+
+    it('throws if API unrecognized', async () => {
+      assert.throws(() => {
+        const url = client.urlFor('getPewp')
+      })
     })
   })
 
@@ -53,17 +59,15 @@ describe ('RiotAPI:', () => {
     it('returns summoner data', async () => {
       const res = await client.getSummonerBySummonerId('QWOrTlVv1NiC4_WedkcunqJ8ypoCz7XBmbIqoezACrrHUKM')
       assert.equal(res.status, 200)
-
-      const data = res.data
-      assert.isDefined(data.id)
-      assert.isDefined(data.accountId)
-      assert.isDefined(data.puuid)
-      assert.isDefined(data.name)
-      assert.isDefined(data.profileIconId)
-      assert.isDefined(data.revisionDate)
-      assert.isDefined(data.summonerLevel)
-      assert.equal('jasonwaterfallz', data.name.toLowerCase())
-
+      assert.isDefined(res.data)
+      assert.isDefined(res.data.id)
+      assert.isDefined(res.data.accountId)
+      assert.isDefined(res.data.puuid)
+      assert.isDefined(res.data.name)
+      assert.isDefined(res.data.profileIconId)
+      assert.isDefined(res.data.revisionDate)
+      assert.isDefined(res.data.summonerLevel)
+      assert.equal('jasonwaterfallz', res.data.name.toLowerCase())
     })
 
     it('returns an error not found when ID not found', async () => {
@@ -82,16 +86,15 @@ describe ('RiotAPI:', () => {
     it('returns summoner data', async () => {
       const res = await client.getSummonerByName('jasonwaterfallz')
       assert.equal(res.status, 200)
-
-      const data = res.data
-      assert.isDefined(data.id)
-      assert.isDefined(data.accountId)
-      assert.isDefined(data.puuid)
-      assert.isDefined(data.name)
-      assert.isDefined(data.profileIconId)
-      assert.isDefined(data.revisionDate)
-      assert.isDefined(data.summonerLevel)
-      assert.equal('jasonwaterfallz', data.name.toLowerCase())
+      assert.isDefined(res.data)
+      assert.isDefined(res.data.id)
+      assert.isDefined(res.data.accountId)
+      assert.isDefined(res.data.puuid)
+      assert.isDefined(res.data.name)
+      assert.isDefined(res.data.profileIconId)
+      assert.isDefined(res.data.revisionDate)
+      assert.isDefined(res.data.summonerLevel)
+      assert.equal('jasonwaterfallz', res.data.name.toLowerCase())
     })
 
     it('returns an error response when summoner name not found', async () => {
