@@ -29,7 +29,7 @@ describe ('RiotAPI:', () => {
 
       const badClient = new RiotAPI('bad api key')
       const res = await badClient.getLolStatus()
-      assert.equal(res.response.status, 403)
+      assert.equal(res.status, 403)
     })
   })
 
@@ -43,21 +43,35 @@ describe ('RiotAPI:', () => {
   describe('getLolStatus', () => {
     it('returns status of LOL apis', async () => {
       const res = await client.getLolStatus()
-      assert.isDefined(res.services)
+      assert.equal(res.status, 200)
+      assert.isDefined(res.data)
+      assert.isDefined(res.data.services)
     })
   })
 
   describe('getSummonerByName', () => {
     it('returns summoner data', async () => {
       const res = await client.getSummonerByName('jasonwaterfallz')
-      assert.isDefined(res.id)
-      assert.isDefined(res.accountId)
-      assert.isDefined(res.puuid)
-      assert.isDefined(res.name)
-      assert.isDefined(res.profileIconId)
-      assert.isDefined(res.revisionDate)
-      assert.isDefined(res.summonerLevel)
-      assert.equal('jasonwaterfallz', res.name.toLowerCase())
+      assert.equal(res.status, 200)
+
+      const data = res.data
+      assert.isDefined(data.id)
+      assert.isDefined(data.accountId)
+      assert.isDefined(data.puuid)
+      assert.isDefined(data.name)
+      assert.isDefined(data.profileIconId)
+      assert.isDefined(data.revisionDate)
+      assert.isDefined(data.summonerLevel)
+      assert.equal('jasonwaterfallz', data.name.toLowerCase())
+    })
+
+    it("returns an error response when summoner doesn't exist", async () => {
+      const res = await client.getSummonerByName('')
+      assert.equal(res.status, 400)
+      assert.isDefined(res.data)
+      assert.isDefined(res.data.status)
+      assert.isDefined(res.data.status.message)
+      assert.isDefined(res.data.status.status_code)
     })
   })
 

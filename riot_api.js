@@ -25,16 +25,16 @@ class RiotAPI {
     const req = this.buildRequest()
     const url = this.urlFor('getSummonerByName', name)
     return req.get(url)
-      .then(res => res.data) 
-      .catch(err => err)
+      .then(res => res)
+      .catch(err => err.response)
   }
 
   getLolStatus() {
     const req = this.buildRequest()
     const url = this.urlFor('lolStatus')
     return req.get(url)
-      .then(res => res.data) 
-      .catch(err => err)
+      .then(res => res)
+      .catch(err => err.response)
   }
 
   buildRequest() {
