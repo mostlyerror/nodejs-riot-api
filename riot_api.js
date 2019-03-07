@@ -21,6 +21,14 @@ class RiotAPI {
     }
   }
 
+  getSummonerBySummonerId(id) {
+    const req = this.buildRequest()
+    const url = this.urlFor('getSummonerBySummonerId', id)
+    return req.get(url)
+      .then(res => res)
+      .catch(err => err.response)
+  }
+
   getSummonerByName(name) {
     const req = this.buildRequest()
     const url = this.urlFor('getSummonerByName', name)
@@ -47,7 +55,8 @@ class RiotAPI {
   urlFor(api, resource) {
     const urlMap = {
       lolStatus: 'https://na1.api.riotgames.com/lol/status/v3/shard-data',
-      getSummonerByName: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${resource}`
+      getSummonerByName: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${resource}`,
+      getSummonerBySummonerId: `https://na1.api.riotgames.com/lol/summoner/v4/summoners/${resource}`
     }
 
     return urlMap[api]

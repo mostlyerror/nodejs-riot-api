@@ -49,6 +49,35 @@ describe ('RiotAPI:', () => {
     })
   })
 
+  describe('getSummonerBySummonerId', () => {
+    it('returns summoner data', async () => {
+      const res = await client.getSummonerBySummonerId('QWOrTlVv1NiC4_WedkcunqJ8ypoCz7XBmbIqoezACrrHUKM')
+      assert.equal(res.status, 200)
+
+      const data = res.data
+      assert.isDefined(data.id)
+      assert.isDefined(data.accountId)
+      assert.isDefined(data.puuid)
+      assert.isDefined(data.name)
+      assert.isDefined(data.profileIconId)
+      assert.isDefined(data.revisionDate)
+      assert.isDefined(data.summonerLevel)
+      assert.equal('jasonwaterfallz', data.name.toLowerCase())
+
+    })
+
+    it('returns an error not found when ID not found', async () => {
+      const res = await client.getSummonerBySummonerId('123132qwerqewrqwer')
+      assert.equal(res.status, 400)
+    })
+
+    it('returns an error forbidden when ID bad', async () => {
+      const res = await client.getSummonerBySummonerId('')
+      assert.equal(res.status, 403)
+    })
+
+  })
+
   describe('getSummonerByName', () => {
     it('returns summoner data', async () => {
       const res = await client.getSummonerByName('jasonwaterfallz')
@@ -65,7 +94,7 @@ describe ('RiotAPI:', () => {
       assert.equal('jasonwaterfallz', data.name.toLowerCase())
     })
 
-    it("returns an error response when summoner doesn't exist", async () => {
+    it('returns an error response when summoner name not found', async () => {
       const res = await client.getSummonerByName('')
       assert.equal(res.status, 400)
       assert.isDefined(res.data)
