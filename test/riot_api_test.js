@@ -46,4 +46,20 @@ describe ('RiotAPI:', () => {
     })
   })
 
+  describe('getSummonerByName', () => {
+    it('returns summoner data', async () => {
+      const apiKey = process.env.RIOT_API_KEY
+      const client = new RiotAPI(apiKey)
+      const res = await client.getSummonerByName('jasonwaterfallz')
+      assert.isDefined(res.id)
+      assert.isDefined(res.accountId)
+      assert.isDefined(res.puuid)
+      assert.isDefined(res.name)
+      assert.isDefined(res.profileIconId)
+      assert.isDefined(res.revisionDate)
+      assert.isDefined(res.summonerLevel)
+      assert.equal('jasonwaterfallz', res.name.toLowerCase())
+    })
+  })
+
 })
