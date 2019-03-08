@@ -1,6 +1,6 @@
 {
   "name": "nodejs-riot-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "interact with Riot Games' League of Legends API",
   "main": "index.js",
   "scripts": {
