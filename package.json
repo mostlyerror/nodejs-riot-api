@@ -1,13 +1,13 @@
 {
   "name": "nodejs-riot-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "interact with Riot Games' League of Legends API",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -w test"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ben Poon <benjamintpoon@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
